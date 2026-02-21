@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Tenant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -43,6 +44,22 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Indicate that the model belongs to a tenant.
+     */
+    public function withTenant(): static
+    {
+        return $this->afterCreating(function (\App\Models\User $user) {
+            $tenant = Tenant::create([
+                'nama_tenant' => fake()->unique()->company(),
+                'subdomain' => fake()->unique()->slug(1),
+                'jenis_usaha' => 'Retail',
+                'status' => 'trial',
+            ]);
+            $user->update(['tenant_id' => $tenant->id]);
+        });
     }
 
     /**

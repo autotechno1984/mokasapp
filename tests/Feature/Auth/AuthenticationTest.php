@@ -10,7 +10,7 @@ test('login screen can be rendered', function () {
 });
 
 test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->withTenant()->create();
 
     $response = $this->post(route('login.store'), [
         'email' => $user->email,
@@ -19,7 +19,7 @@ test('users can authenticate using the login screen', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        ->assertRedirect("http://{$user->tenant->subdomain}.localhost/dashboard");
 
     $this->assertAuthenticated();
 });
@@ -63,7 +63,7 @@ test('users can logout', function () {
 
     $response = $this->actingAs($user)->post(route('logout'));
 
-    $response->assertRedirect(route('landing'));
+    $response->assertRedirect('/');
 
     $this->assertGuest();
 });
