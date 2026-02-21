@@ -31,15 +31,15 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           tools: composer:v2
-          coverage: xdebug
+          coverage: none
+          extensions: pdo_sqlite, sqlite3
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
         with:
-          node-version: '22'
-
-      - name: Install Node Dependencies
-        run: npm i
+          path: ~/.composer/cache
+          key: composer-${{ matrix.php-version }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ matrix.php-version }}-
 
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -52,9 +52,6 @@ jobs:
 
       - name: Create SQLite Test Database
         run: touch database/testing.sqlite
-
-      - name: Build Assets
-        run: npm run build
 
       - name: Run Tests
         run: ./vendor/bin/pest
