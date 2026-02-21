@@ -50,6 +50,9 @@ jobs:
       - name: Generate Application Key
         run: php artisan key:generate
 
+      - name: Create SQLite Test Database
+        run: touch database/testing.sqlite
+
       - name: Build Assets
         run: npm run build
 

@@ -52,9 +52,10 @@ class UserFactory extends Factory
     public function withTenant(): static
     {
         return $this->afterCreating(function (\App\Models\User $user) {
+            $suffix = Str::random(8);
             $tenant = Tenant::create([
-                'nama_tenant' => fake()->unique()->company(),
-                'subdomain' => fake()->unique()->slug(1),
+                'nama_tenant' => 'Tenant ' . $suffix,
+                'subdomain' => 'test' . strtolower($suffix),
                 'jenis_usaha' => 'Retail',
                 'status' => 'trial',
             ]);
