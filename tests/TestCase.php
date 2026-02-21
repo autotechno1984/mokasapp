@@ -11,10 +11,13 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        // When using SQLite, purge central connection so it reconnects
-        // to the same database file as the default sqlite connection.
+        // Make the 'central' connection (used by Tenant model) share the same
+        // underlying PDO connection as the default 'sqlite' connection.
+        // This avoids "database is locked" when RefreshDatabase wraps sqlite
+        // in a transaction and central tries to write to the same file.
         if (config('database.default') === 'sqlite') {
             DB::purge('central');
+            DB::extend('central', fn () => DB::connection('sqlite'));
         }
     }
 }
