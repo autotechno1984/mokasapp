@@ -9,21 +9,18 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 
 
-Route::get('/login', function () {
-    $central = config('app.domain', 'mokasapp.com');
-
-    // bawa balik ke dashboard tenant setelah login
-    $intended = urlencode('https://' . request()->getHost() . '/dashboard');
-
-    return redirect()->to("https://{$central}/login?intended={$intended}");
-})->name('login');
-
-
 Route::middleware([
     'web',
-    InitializeTenancyByDomain::class,          // ✅ cocok jika domains.domain = "smb.mokasapp.com"
+    InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
+
+    // Redirect /login di tenant domain ke central login
+    Route::get('/login', function () {
+        $central = config('app.domain', 'mokasapp.com');
+        $intended = urlencode('https://' . request()->getHost() . '/dashboard');
+        return redirect()->to("https://{$central}/login?intended={$intended}");
+    })->name('tenant.login');
 
     /**
      * PROBE (sementara)
