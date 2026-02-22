@@ -11,6 +11,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectGuestsTo(function ($request) {
+            // Kalau request sedang berada di tenant (stancl tenancy)
+            if (function_exists('tenant') && tenant()) {
+                $central = config('app.domain', 'mokasapp.com');
+                $intended = urlencode($request->fullUrl());
+
+                return "https://{$central}/login?intended={$intended}";
+            }
+
+            // Central domain: login normal
+            return '/login';
+        });
+
+
         $middleware->web(append: [
             \App\Http\Middleware\CheckForceLogout::class,
         ]);
