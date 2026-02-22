@@ -9,16 +9,14 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 
 
-Route::get('/_env_probe', function () {
-    return response()->json([
-        'host' => request()->getHost(),
-        'app_url' => config('app.url'),
-        'app_domain' => config('app.domain'),
-        'route_dashboard_url' => route('tenant.dashboard', [], false), // path saja
-        'session_domain' => config('session.domain'),
-        'fortify_home' => config('fortify.home'),
-    ]);
-});
+Route::get('/login', function () {
+    $central = config('app.domain', 'mokasapp.com');
+
+    // bawa balik ke dashboard tenant setelah login
+    $intended = urlencode('https://' . request()->getHost() . '/dashboard');
+
+    return redirect()->to("https://{$central}/login?intended={$intended}");
+})->name('login');
 
 
 Route::middleware([
@@ -32,13 +30,7 @@ Route::middleware([
      * Kalau ini 404 di smb.mokasapp.com -> tenant routes tidak kepakai (problem loading/routes/cache/mapping/domain)
      * Kalau ini JSON tapi tenant_id null -> tenancy tidak ketemu tenant (mapping domains salah)
      */
-    Route::get('/_tenant_probe', function () {
-        return response()->json([
-            'where' => 'routes/tenant.php',
-            'host' => request()->getHost(),
-            'tenant_id' => optional(tenant())->getKey(),
-        ]);
-    });
+
 
     // Optional: homepage tenant
     Route::get('/', function () {
