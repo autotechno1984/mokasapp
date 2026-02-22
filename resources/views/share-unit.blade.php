@@ -5,7 +5,7 @@
 </head>
 <body class="bg-zinc-50 dark:bg-zinc-950 min-h-screen">
     @php
-        $gambarUrls = $unit->gambars->map(fn($g) => Storage::disk('public')->url($g->path))->values()->toArray();
+        $gambarUrls = $unit->gambars->map(fn($g) => Storage::disk('private')->temporaryUrl($g->path, now()->addHour()))->values()->toArray();
     @endphp
 
     <div class="max-w-lg mx-auto py-8 px-4">

@@ -179,7 +179,7 @@ new class extends Component
         if (! $unit) return;
 
         foreach ($this->photos as $photo) {
-            $path = $photo->store('unit-images', 'public');
+            $path = $photo->store('unit-images', 'private');
             Gambar::create([
                 'tenant_id' => $unit->tenant_id,
                 'unit_id' => $unit->id,
@@ -195,7 +195,7 @@ new class extends Component
     {
         $gambar = Gambar::find($gambarId);
         if ($gambar) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($gambar->path);
+            \Illuminate\Support\Facades\Storage::disk('private')->delete($gambar->path);
             $gambar->delete();
         }
     }
@@ -679,7 +679,7 @@ new class extends Component
                     <div class="grid grid-cols-3 gap-2 mt-4">
                         @foreach($unitGambars as $gambar)
                             <div class="relative group rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700">
-                                <img src="{{ Storage::disk('public')->url($gambar->path) }}" class="w-full h-24 object-cover" />
+                                <img src="{{ Storage::disk('private')->temporaryUrl($gambar->path, now()->addHour()) }}" class="w-full h-24 object-cover" />
                                 <button wire:click="deleteGambar({{ $gambar->id }})"
                                     class="absolute top-1 right-1 bg-red-500 text-white rounded-full size-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                                     &times;
