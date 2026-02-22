@@ -19,6 +19,9 @@ return [
     'central_domains' => array_filter(array_unique([
         '127.0.0.1',
         'localhost',
+        'mokasapp-master-bfxtji.laravel.cloud',
+        'mokasapp.com',
+        'www.mokasapp.com',
         env('APP_DOMAIN', 'mokasapp.test'),
         parse_url(env('APP_URL', ''), PHP_URL_HOST) ?: null,
         env('LARAVEL_CLOUD_DOMAIN'),
