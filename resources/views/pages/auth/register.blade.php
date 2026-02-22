@@ -47,7 +47,7 @@
             </div>
 
             <div class="rounded-xl border border-zinc-200 p-4 dark:border-zinc-700">
-                <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Admin User</p>
+                <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Pengguna admin</p>
                 <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Akun ini akan menjadi pengguna pertama di tenant.</p>
 
                 <div class="mt-4 flex flex-col gap-4">
@@ -73,7 +73,7 @@
 
                     <flux:input
                         name="password"
-                        label="Password"
+                        label="Kata sandi"
                         type="password"
                         required
                         autocomplete="new-password"
@@ -83,11 +83,11 @@
 
                     <flux:input
                         name="password_confirmation"
-                        label="Konfirmasi password"
+                        label="Konfirmasi kata sandi"
                         type="password"
                         required
                         autocomplete="new-password"
-                        placeholder="Ulangi password"
+                        placeholder="Ulangi kata sandi"
                         viewable
                     />
                 </div>
