@@ -7,6 +7,11 @@ use App\Http\Middleware\EnsureUserBelongsToTenant;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
+Route::get('/_dash_open', function () {
+    return 'TENANT OK';
+});
+
+
 Route::middleware([
     'web',
     InitializeTenancyByDomain::class,          // ✅ cocok jika domains.domain = "smb.mokasapp.com"
