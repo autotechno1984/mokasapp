@@ -13,7 +13,7 @@ class EnsureUserBelongsToTenant
         $user = $request->user();
         $tenant = tenant();
 
-        if (! $user || ! $tenant || $user->tenant_id !== $tenant->getTenantKey()) {
+        if (! $user || ! $tenant || (int) $user->tenant_id !== (int) $tenant->getTenantKey()) {
             abort(404);
         }
 
