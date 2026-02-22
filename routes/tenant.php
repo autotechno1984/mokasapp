@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureUserBelongsToTenant;
-use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
@@ -17,7 +17,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 Route::middleware([
     'web',
-    InitializeTenancyBySubdomain::class,     // ✅ penting: subdomain-based tenancy
+    InitializeTenancyByDomain::class,     // ✅ penting: subdomain-based tenancy
     PreventAccessFromCentralDomains::class,  // ✅ blok akses dari domain pusat
 ])->group(function () {
 
