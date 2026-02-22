@@ -690,12 +690,27 @@ new class extends Component
                 @endif
 
                 {{-- Upload --}}
-                <div class="mt-4">
+                <div class="mt-4" x-data="{ fileNames: [] }">
                     <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Upload Gambar</label>
                     <input type="file" accept="image/*" multiple
-                        x-on:change="Array.from($event.target.files).forEach(f => $wire.upload('photos', f)); $event.target.value = ''"
+                        x-on:change="
+                            fileNames = Array.from($event.target.files).map(f => f.name);
+                            Array.from($event.target.files).forEach(f => $wire.upload('photos', f));
+                            $event.target.value = '';
+                        "
                         class="block w-full text-sm text-zinc-500 dark:text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 dark:file:bg-blue-900/30 dark:file:text-blue-400 hover:file:bg-blue-100" />
                     @error('photos.*') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
+
+                    <template x-if="fileNames.length > 0">
+                        <ul class="mt-2 space-y-1">
+                            <template x-for="name in fileNames" :key="name">
+                                <li class="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
+                                    <svg class="w-3 h-3 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>
+                                    <span x-text="name"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
 
                     <div wire:loading wire:target="photos" class="mt-2 text-sm text-zinc-500">
                         Mengupload...
