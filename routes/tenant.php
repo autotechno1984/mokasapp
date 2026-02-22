@@ -7,8 +7,17 @@ use App\Http\Middleware\EnsureUserBelongsToTenant;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-Route::get('/_dash_open', function () {
-    return 'TENANT OK';
+
+
+Route::get('/_env_probe', function () {
+    return response()->json([
+        'host' => request()->getHost(),
+        'app_url' => config('app.url'),
+        'app_domain' => config('app.domain'),
+        'route_dashboard_url' => route('tenant.dashboard', [], false), // path saja
+        'session_domain' => config('session.domain'),
+        'fortify_home' => config('fortify.home'),
+    ]);
 });
 
 
