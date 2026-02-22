@@ -18,7 +18,10 @@ foreach ($centralDomains as $index => $domain) {
 
             if ($subdomain && $appDomain) {
                 $scheme = parse_url((string) config('app.url'), PHP_URL_SCHEME) ?: request()->getScheme();
-                return redirect()->to(sprintf('%s://%s.%s/dashboard', $scheme, $subdomain, $appDomain));
+                $port = request()->getPort();
+                $portSegment = $port && ! in_array($port, [80, 443], true) ? ":{$port}" : '';
+
+                return redirect()->to(sprintf('%s://%s.%s%s/dashboard', $scheme, $subdomain, $appDomain, $portSegment));
             }
 
             auth()->logout();

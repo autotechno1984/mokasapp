@@ -36,8 +36,10 @@ class LoginResponse implements LoginResponseContract
             }
 
             $scheme = parse_url((string) config('app.url'), PHP_URL_SCHEME) ?: ($request instanceof Request ? $request->getScheme() : 'http');
+            $port = $request instanceof Request ? $request->getPort() : null;
+            $portSegment = $port && ! in_array($port, [80, 443], true) ? ":{$port}" : '';
             $path = '/dashboard';
-            $url = sprintf('%s://%s.%s%s', $scheme, $subdomain, $appDomain, $path);
+            $url = sprintf('%s://%s.%s%s%s', $scheme, $subdomain, $appDomain, $portSegment, $path);
 
             return redirect()->to($url);
         }
