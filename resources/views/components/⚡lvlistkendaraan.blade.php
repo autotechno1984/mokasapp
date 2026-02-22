@@ -692,7 +692,8 @@ new class extends Component
                 {{-- Upload --}}
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Upload Gambar</label>
-                    <input type="file" wire:model="photos" multiple accept="image/*"
+                    <input type="file" accept="image/*" multiple
+                        x-on:change="Array.from($event.target.files).forEach(f => $wire.upload('photos', f)); $event.target.value = ''"
                         class="block w-full text-sm text-zinc-500 dark:text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 dark:file:bg-blue-900/30 dark:file:text-blue-400 hover:file:bg-blue-100" />
                     @error('photos.*') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
 
