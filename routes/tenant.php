@@ -15,13 +15,6 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
 
-    // Redirect /login di tenant domain ke central login
-    Route::get('/login', function () {
-        $central = config('app.domain', 'mokasapp.com');
-        $intended = urlencode('https://' . request()->getHost() . '/dashboard');
-        return redirect()->to("https://{$central}/login?intended={$intended}");
-    })->name('tenant.login');
-
     /**
      * PROBE (sementara)
      * Kalau ini 404 di smb.mokasapp.com -> tenant routes tidak kepakai (problem loading/routes/cache/mapping/domain)
