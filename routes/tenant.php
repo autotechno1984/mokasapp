@@ -4,28 +4,29 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureUserBelongsToTenant;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
 |--------------------------------------------------------------------------
-|
-| Here you can register the tenant routes for your application.
-| These routes are loaded by the TenancyServiceProvider.
-|
+| Routes ini berlaku untuk tenant domain: {subdomain}.mokasapp.com
+| Pastikan central_domains hanya berisi domain pusat (mokasapp.com, www, dll)
 */
 
 Route::middleware([
     'web',
-    InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class,
+    InitializeTenancyBySubdomain::class,     // ✅ penting: subdomain-based tenancy
+    PreventAccessFromCentralDomains::class,  // ✅ blok akses dari domain pusat
 ])->group(function () {
+
+    // Optional: homepage tenant
     Route::get('/', function () {
         return view('welcome');
     })->name('tenant.home');
 
+    // Share link (public)
     Route::get('/share/{token}', function (string $token) {
         $unit = \App\Models\Unit::where('share_token', $token)
             ->with(['masterbarang.merek', 'masterbarang.tipe', 'unitdetail', 'gambars', 'tenant'])
@@ -39,8 +40,10 @@ Route::middleware([
         return view('share-unit', compact('unit'));
     })->name('share.unit');
 
+    // Authenticated tenant area
     Route::middleware(['auth', 'verified', EnsureUserBelongsToTenant::class])->group(function () {
-        // Semua user (owner & viewer)
+
+        // Dashboard untuk semua user tenant
         Route::view('/dashboard', 'dashboard')->name('tenant.dashboard');
 
         // Owner only
