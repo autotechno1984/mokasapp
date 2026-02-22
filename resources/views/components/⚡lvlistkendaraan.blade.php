@@ -432,7 +432,7 @@ new class extends Component
                     <div class="lg:w-64 w-full flex-shrink-0 bg-zinc-100 dark:bg-zinc-800">
                         @if($unit->gambars->count() > 0)
                             @php
-                                $gambarUrls = $unit->gambars->map(fn($g) => Storage::disk('public')->url($g->path))->values()->toArray();
+                                $gambarUrls = $unit->gambars->map(fn($g) => Storage::disk('private')->temporaryUrl($g->path, now()->addHour()))->values()->toArray();
                             @endphp
                             <div x-data="{ active: 0, images: {{ Js::from($gambarUrls) }} }">
                                 {{-- Gambar utama --}}
