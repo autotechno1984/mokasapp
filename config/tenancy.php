@@ -16,11 +16,12 @@ return [
      *
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
-    'central_domains' => [
+    'central_domains' => array_filter(array_unique([
         '127.0.0.1',
         'localhost',
-        'mokasapp.test'
-    ],
+        env('APP_DOMAIN', 'mokasapp.test'),
+        parse_url(env('APP_URL', ''), PHP_URL_HOST) ?: null,
+    ])),
 
     /**
      * Tenancy bootstrappers are executed when tenancy is initialized.
