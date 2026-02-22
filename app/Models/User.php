@@ -4,13 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Concerns\BelongsToTenant;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements  FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use BelongsToTenant, HasFactory, Notifiable, TwoFactorAuthenticatable;
@@ -27,6 +29,11 @@ class User extends Authenticatable
         'tenant_id',
         'role',
     ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, 'admin@admin.com');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
