@@ -7,19 +7,24 @@ use App\Http\Middleware\EnsureUserBelongsToTenant;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
-/*
-|--------------------------------------------------------------------------
-| Tenant Routes
-|--------------------------------------------------------------------------
-| Routes ini berlaku untuk tenant domain: {subdomain}.mokasapp.com
-| Pastikan central_domains hanya berisi domain pusat (mokasapp.com, www, dll)
-*/
-
 Route::middleware([
     'web',
-    InitializeTenancyByDomain::class,     // ✅ penting: subdomain-based tenancy
-    PreventAccessFromCentralDomains::class,  // ✅ blok akses dari domain pusat
+    InitializeTenancyByDomain::class,          // ✅ cocok jika domains.domain = "smb.mokasapp.com"
+    PreventAccessFromCentralDomains::class,
 ])->group(function () {
+
+    /**
+     * PROBE (sementara)
+     * Kalau ini 404 di smb.mokasapp.com -> tenant routes tidak kepakai (problem loading/routes/cache/mapping/domain)
+     * Kalau ini JSON tapi tenant_id null -> tenancy tidak ketemu tenant (mapping domains salah)
+     */
+    Route::get('/_tenant_probe', function () {
+        return response()->json([
+            'where' => 'routes/tenant.php',
+            'host' => request()->getHost(),
+            'tenant_id' => optional(tenant())->getKey(),
+        ]);
+    });
 
     // Optional: homepage tenant
     Route::get('/', function () {
@@ -42,11 +47,8 @@ Route::middleware([
 
     // Authenticated tenant area
     Route::middleware(['auth', 'verified', EnsureUserBelongsToTenant::class])->group(function () {
-
-        // Dashboard untuk semua user tenant
         Route::view('/dashboard', 'dashboard')->name('tenant.dashboard');
 
-        // Owner only
         Route::middleware('role.owner')->group(function () {
             Route::livewire('/laporan/stock', 'pages::laporan.stock.index')->name('laporan.stock');
             Route::livewire('/unit-create', 'pages::unit.create')->name('unit.create');
