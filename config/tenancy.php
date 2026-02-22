@@ -21,6 +21,7 @@ return [
         'localhost',
         env('APP_DOMAIN', 'mokasapp.test'),
         parse_url(env('APP_URL', ''), PHP_URL_HOST) ?: null,
+        env('LARAVEL_CLOUD_DOMAIN'),
     ])),
 
     /**
