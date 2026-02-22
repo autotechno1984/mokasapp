@@ -22,7 +22,7 @@ return [
         'mokasapp-master-bfxtji.laravel.cloud',
         'mokasapp.com',
         'www.mokasapp.com',
-        env('APP_DOMAIN', 'mokasapp.test'),
+        env('APP_DOMAIN', 'mokasapp.com'),
         parse_url(env('APP_URL', ''), PHP_URL_HOST) ?: null,
         env('LARAVEL_CLOUD_DOMAIN'),
     ])),
