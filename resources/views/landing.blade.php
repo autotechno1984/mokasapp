@@ -18,7 +18,7 @@
 
         <!-- Alpine.js (standalone, tidak konflik dengan @fluxScripts di halaman app) -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        
+
         <style>
             .glass {
                 background: rgba(255, 255, 255, 0.8);
@@ -40,7 +40,7 @@
         </style>
     </head>
     <body class="antialiased bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans">
-        
+
         <!-- Navbar -->
         <nav x-data="{
                 open: false,
@@ -52,8 +52,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
                     <div class="flex items-center gap-2">
-                        <x-app-logo-icon class="h-8 w-auto text-accent-red" />
-                        <span class="text-xl font-bold tracking-tight accent-red">MOKAS<span class="text-zinc-900 dark:text-white">APP</span></span>
+                        <x-app-logo-icon class="h-52 pt-5 w-auto text-accent-red" />
                     </div>
 
                     <div class="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -123,7 +122,7 @@
                     <rect width="100" height="100" fill="url(#grid)" />
                 </svg>
             </div>
-            
+
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center lg:text-left grid lg:grid-cols-2 gap-12 items-center">
                     <div>
@@ -155,7 +154,7 @@
                     <div class="relative hidden lg:block">
                         <!-- Decorative glow -->
                         <div class="absolute -inset-4 bg-accent-red opacity-20 blur-3xl rounded-full"></div>
-                        
+
                         <!-- Laptop Mockup Container -->
                         <div class="relative z-10 mx-auto w-full max-w-[540px] transform rotate-1 hover:rotate-0 transition-transform duration-500">
                             <!-- Laptop Screen -->
@@ -171,7 +170,7 @@
                                         <div class="w-6 h-1 bg-zinc-700 rounded-full"></div>
                                         <div class="w-6 h-1 bg-accent-red/30 rounded-full"></div>
                                     </div>
-                                    
+
                                     <!-- Main Screen Content -->
                                     <div class="flex-1 p-4 flex flex-col gap-4 overflow-hidden">
                                         <!-- Top Navigation Mockup -->
@@ -182,7 +181,7 @@
                                                 <div class="h-5 w-5 bg-zinc-50 dark:bg-zinc-900 rounded-full border border-zinc-100 dark:border-zinc-800"></div>
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Stats Grid -->
                                         <div class="grid grid-cols-3 gap-3">
                                             <div class="p-2.5 bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800">
@@ -198,7 +197,7 @@
                                                 <div class="text-xs font-black text-accent-red">158 Unit</div>
                                             </div>
                                         </div>
-                                        
+
                                         <!-- Chart Area -->
                                         <div class="bg-zinc-50 dark:bg-zinc-900 rounded-lg p-3 border border-zinc-100 dark:border-zinc-800 flex-1 flex flex-col">
                                             <div class="flex justify-between items-center mb-3">
