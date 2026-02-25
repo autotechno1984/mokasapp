@@ -49,10 +49,10 @@
                     setTimeout(() => { window.location.hash = href; }, 120);
                 }
              }" class="fixed top-0 z-50 w-full glass border-b border-zinc-200 dark:border-zinc-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
                     <div class="flex items-center gap-2">
-                        <x-app-logo-icon class="h-52 pt-5 w-auto text-accent-red" />
+                        <x-app-logo-icon class="h-52 -ml-2 pt-5 w-auto text-accent-red" />
                     </div>
 
                     <div class="hidden md:flex items-center gap-8 text-sm font-medium">
