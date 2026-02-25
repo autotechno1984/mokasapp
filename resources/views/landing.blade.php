@@ -70,7 +70,7 @@
                                 <a href="{{ route('login') }}" class="hidden sm:inline text-sm font-medium hover:text-accent-red transition">Masuk</a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-accent-red hover:bg-red-700 transition shadow-sm">
-                                        Daftar Sekarang
+                                        Daftar
                                     </a>
                                 @endif
                             @endauth
