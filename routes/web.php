@@ -10,7 +10,7 @@ $centralDomains = config('tenancy.central_domains', []);
  * Kalau Filament default: admin
  * Kalau kamu set custom di PanelProvider: ganti di sini.
  */
-const ADMIN_PATH = 'admin';
+defined('ADMIN_PATH') || define('ADMIN_PATH', 'admin');
 
 /**
  * Register central (non-tenant) routes only for configured central domains.
