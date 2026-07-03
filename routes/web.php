@@ -12,10 +12,23 @@ $centralDomains = config('tenancy.central_domains', []);
 defined('ADMIN_PATH') || define('ADMIN_PATH', 'admin');
 
 /**
+ * Domain publik utama tempat route bernama (landing, dashboard, settings)
+ * didaftarkan. WAJIB dipakai untuk penamaan supaya route('dashboard') dsb.
+ * menghasilkan URL domain asli (mis. mokasapp.com), BUKAN entri pertama
+ * central_domains yang kebetulan 127.0.0.1.
+ */
+$appDomain = config('app.domain');
+$namedDomain = in_array($appDomain, $centralDomains, true)
+    ? $appDomain
+    : ($centralDomains[array_key_first($centralDomains)] ?? null);
+
+/**
  * Register central (non-tenant) routes only for configured central domains.
  */
-foreach ($centralDomains as $index => $domain) {
-    Route::domain($domain)->group(function () use ($index) {
+foreach ($centralDomains as $domain) {
+    $isPrimary = ($domain === $namedDomain);
+
+    Route::domain($domain)->group(function () use ($isPrimary) {
 
         // Landing page
         $landingRoute = Route::get('/', function () {
@@ -64,8 +77,8 @@ foreach ($centralDomains as $index => $domain) {
             return redirect()->route('login');
         })->middleware(['auth', 'verified']);
 
-        // Naming hanya sekali (domain pertama) biar gak duplikat
-        if ($index === 0) {
+        // Naming hanya di domain publik utama biar gak duplikat & URL benar
+        if ($isPrimary) {
             $landingRoute->name('landing');
             $dashboardRoute->name('dashboard');
 
