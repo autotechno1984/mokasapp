@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    // Endpoint Chromium remote untuk render PDF (mis. Cloudflare Browser Rendering).
+    // Kosongkan untuk pakai Chromium lokal. Diisi belakangan lewat env.
+    'pdf' => [
+        'browser_host' => env('PDF_BROWSER_HOST'),
+        'browser_port' => env('PDF_BROWSER_PORT', 9222),
+    ],
+
 ];

@@ -22,6 +22,9 @@
                         <flux:sidebar.item icon="banknotes" :href="route('biaya.index')" :current="request()->routeIs('biaya.index')" wire:navigate>
                             {{ __('Biaya') }}
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="receipt-percent" :href="route('kwitansi.index')" :current="request()->routeIs('kwitansi.index')" wire:navigate>
+                            {{ __('Kwitansi') }}
+                        </flux:sidebar.item>
                         <flux:sidebar.group expandable heading="{{ __('Laporan') }}" icon="shopping-bag">
                             <flux:sidebar.item :href="route('laporan.penjualan')" :current="request()->routeIs('laporan.penjualan')" wire:navigate>
                                 {{ __('Laporan Penjualan') }}

@@ -52,6 +52,10 @@ Route::middleware([
             Route::livewire('/laporan/penjualan', 'pages::laporan.penjualan.index')->name('laporan.penjualan');
             Route::livewire('/laporan/labarugi', 'pages::laporan.labarugi.index')->name('laporan.labarugi');
             Route::livewire('/setting/users', 'pages::setting.user.index')->name('setting.users');
+
+            // Kwitansi (bukti pembayaran)
+            Route::livewire('/kwitansi', 'pages::kwitansi.index')->name('kwitansi.index');
+            Route::get('/kwitansi/{kwitansi}/pdf', \App\Http\Controllers\KwitansiPdfController::class)->name('kwitansi.pdf');
         });
     });
 });
