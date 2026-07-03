@@ -126,7 +126,7 @@ new class extends Component
                     <div class="lg:w-56 w-full flex-shrink-0 bg-zinc-100 dark:bg-zinc-800">
                         @if($unit->gambars->count() > 0)
                             @php
-                                $gambarUrls = $unit->gambars->map(fn($g) => \Illuminate\Support\Facades\Storage::disk('public')->url($g->path))->values()->toArray();
+                                $gambarUrls = $unit->gambars->map(fn($g) => \Illuminate\Support\Facades\Storage::disk('r2')->temporaryUrl($g->path, now()->addHour()))->values()->toArray();
                             @endphp
                             <div x-data="{ active: 0, images: {{ Js::from($gambarUrls) }} }">
                                 <div class="w-full h-40 overflow-hidden">
